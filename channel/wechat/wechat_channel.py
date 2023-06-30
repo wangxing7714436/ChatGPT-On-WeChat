@@ -26,6 +26,14 @@ from lib.itchat.content import *
 
 
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE])
+
+def **login_callback(self):**
+    print('Login successful')
+
+def logout_callback(self):
+    print('Logout')
+    self.startup()
+
 def handler_single_msg(msg):
     try:
         cmsg = WechatMessage(msg, False)
@@ -117,6 +125,8 @@ class WechatChannel(ChatChannel):
             hotReload=hotReload,
             statusStorageDir=status_path,
             qrCallback=qrCallback,
+            loginCallback=self.login_callback,
+            exitCallback=self.logout_callback
         )
         self.user_id = itchat.instance.storageClass.userName
         self.name = itchat.instance.storageClass.nickName
